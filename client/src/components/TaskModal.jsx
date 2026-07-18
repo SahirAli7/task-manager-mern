@@ -4,6 +4,7 @@ import { FaTimes } from 'react-icons/fa';
 
 const TaskModal = ({ show, onClose, editTask }) => {
   const { createTask, updateTask } = useTasks();
+  const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ title: '', description: '', priority: 'Medium', dueDate: '' });
 
   useEffect(() => {
@@ -22,14 +23,19 @@ const TaskModal = ({ show, onClose, editTask }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.title.trim()) return;
+    setLoading(true);
     const payload = { ...form };
     if (!payload.dueDate) delete payload.dueDate;
-    if (editTask) {
-      await updateTask(editTask._id, payload);
-    } else {
-      await createTask(payload);
+    try {
+      if (editTask) {
+        await updateTask(editTask._id, payload);
+      } else {
+        await createTask(payload);
+      }
+      onClose();
+    } finally {
+      setLoading(false);
     }
-    onClose();
   };
 
   if (!show) return null;
@@ -72,8 +78,8 @@ const TaskModal = ({ show, onClose, editTask }) => {
           </div>
           <div className="modal-foot">
             <button type="button" className="btn-cancel" onClick={onClose}>Cancel</button>
-            <button type="submit" className="btn-submit" style={{ width: 'auto', padding: '9px 24px' }}>
-              {editTask ? 'Update' : 'Create'}
+            <button type="submit" className="btn-submit" disabled={loading} style={{ width: 'auto', padding: '9px 24px' }}>
+              {loading ? 'Saving...' : (editTask ? 'Update' : 'Create')}
             </button>
           </div>
         </form>

@@ -70,11 +70,16 @@ export const TaskProvider = ({ children }) => {
     await fetchStats();
   };
 
+  const toggleWithToast = async (id, task) => {
+    await toggleTask(id);
+    toast.success(task.completed ? 'Task marked pending' : 'Task completed');
+  };
+
   return (
     <TaskContext.Provider value={{
       tasks, stats, filters, setFilters,
       fetchTasks, fetchStats, createTask, updateTask,
-      deleteTask, deleteCompleted, toggleTask,
+      deleteTask, deleteCompleted, toggleTask, toggleWithToast,
     }}>
       {children}
     </TaskContext.Provider>

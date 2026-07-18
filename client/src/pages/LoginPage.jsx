@@ -6,17 +6,21 @@ import toast from 'react-hot-toast';
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await login({ email, password });
       toast.success('Logged in');
       navigate('/');
     } catch (err) {
       toast.error(err.response?.data?.message || 'Login failed');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -36,7 +40,7 @@ const LoginPage = () => {
             <input type="password" value={password} required placeholder="Enter your password"
               onChange={(e) => setPassword(e.target.value)} />
           </div>
-          <button type="submit" className="btn-submit">Sign In</button>
+          <button type="submit" className="btn-submit" disabled={loading}>{loading ? 'Signing in...' : 'Sign In'}</button>
         </form>
         <p className="auth-footer">
           Don't have an account? <Link to="/register">Sign Up</Link>

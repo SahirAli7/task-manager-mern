@@ -2,7 +2,7 @@ import { useTasks } from '../context/TaskContext';
 import { FaCheck, FaUndo, FaEdit, FaTrash } from 'react-icons/fa';
 
 const TaskCard = ({ task, onEdit }) => {
-  const { toggleTask, deleteTask } = useTasks();
+  const { toggleWithToast, deleteTask } = useTasks();
 
   const isOverdue = task.dueDate && new Date(task.dueDate) < new Date() && !task.completed;
 
@@ -23,7 +23,7 @@ const TaskCard = ({ task, onEdit }) => {
         </div>
       </div>
       <div className="task-actions">
-        <button className={`btn-icon complete`} onClick={() => toggleTask(task._id)} title={task.completed ? 'Undo' : 'Complete'}>
+        <button className={`btn-icon complete`} onClick={() => toggleWithToast(task._id, task)} title={task.completed ? 'Undo' : 'Complete'}>
           {task.completed ? <FaUndo /> : <FaCheck />}
         </button>
         <button className="btn-icon edit" onClick={() => onEdit(task)} title="Edit"><FaEdit /></button>
