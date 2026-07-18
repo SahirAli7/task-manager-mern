@@ -1,10 +1,18 @@
+import { useState } from 'react';
 import { useTasks } from '../context/TaskContext';
-import { FaCheck, FaUndo, FaEdit, FaTrash } from 'react-icons/fa';
+import { FaCheck, FaUndo, FaEdit, FaTrash, FaSpinner } from 'react-icons/fa';
 
 const TaskCard = ({ task, onEdit }) => {
   const { toggleWithToast, deleteTask } = useTasks();
+  const [toggling, setToggling] = useState(false);
 
   const isOverdue = task.dueDate && new Date(task.dueDate) < new Date() && !task.completed;
+
+  const handleToggle = async () => {
+    setToggling(true);
+    await toggleWithToast(task._id, task);
+    setToggling(false);
+  };
 
   return (
     <div className={`task-card ${task.completed ? 'completed' : ''}`}>
@@ -23,8 +31,8 @@ const TaskCard = ({ task, onEdit }) => {
         </div>
       </div>
       <div className="task-actions">
-        <button className={`btn-icon complete`} onClick={() => toggleWithToast(task._id, task)} title={task.completed ? 'Undo' : 'Complete'}>
-          {task.completed ? <FaUndo /> : <FaCheck />}
+        <button className="btn-icon complete" onClick={handleToggle} disabled={toggling} title={task.completed ? 'Undo' : 'Complete'}>
+          {toggling ? <FaSpinner className="fa-spin" /> : (task.completed ? <FaUndo /> : <FaCheck />)}
         </button>
         <button className="btn-icon edit" onClick={() => onEdit(task)} title="Edit"><FaEdit /></button>
         <button className="btn-icon delete" onClick={() => deleteTask(task._id)} title="Delete"><FaTrash /></button>
