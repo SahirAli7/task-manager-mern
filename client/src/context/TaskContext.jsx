@@ -54,8 +54,12 @@ export const TaskProvider = ({ children }) => {
   };
 
   const deleteCompleted = async () => {
-    await taskApi.deleteCompleted();
-    toast.success('Completed tasks deleted');
+    const res = await taskApi.deleteCompleted();
+    if (res.data.deletedCount === 0) {
+      toast('No completed tasks to clear');
+    } else {
+      toast.success(`${res.data.deletedCount} completed task${res.data.deletedCount > 1 ? 's' : ''} deleted`);
+    }
     await fetchTasks();
     await fetchStats();
   };

@@ -86,8 +86,8 @@ const deleteTask = async (req, res) => {
 
 const deleteCompleted = async (req, res) => {
   try {
-    await Task.deleteMany({ user: req.user._id, completed: true });
-    res.json({ message: 'Completed tasks deleted' });
+    const result = await Task.deleteMany({ user: req.user._id, completed: true });
+    res.json({ deletedCount: result.deletedCount });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
