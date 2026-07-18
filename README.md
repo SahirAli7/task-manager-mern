@@ -46,7 +46,7 @@ npm install
 Create a `.env` file in the `server` folder:
 
 ```
-MONGO_URI=your_mongodb_atlas_connection_string
+MONGODB_URI=your_mongodb_atlas_connection_string
 JWT_SECRET=your_jwt_secret_key
 PORT=5000
 ```
@@ -94,7 +94,7 @@ The frontend will run on `http://localhost:5173` and proxy API requests to `http
 
 | Variable | Description |
 |----------|-------------|
-| `MONGO_URI` | MongoDB connection string |
+| `MONGODB_URI` | MongoDB connection string |
 | `JWT_SECRET` | Secret key for JWT signing |
 | `PORT` | Server port (default: 5000) |
 | `VITE_API_URL` | API URL for production (optional, defaults to `http://localhost:5000/api`) |
