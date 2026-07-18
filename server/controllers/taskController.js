@@ -31,12 +31,23 @@ const getTasks = async (req, res) => {
       ];
     }
 
-    let sortOption = { createdAt: -1 };
-    if (sort === 'oldest') sortOption = { createdAt: 1 };
-    if (sort === 'priority') sortOption = { priority: -1 };
-    if (sort === 'dueDate') sortOption = { dueDate: 1 };
+    let tasks = await Task.find(query);
 
-    const tasks = await Task.find(query).sort(sortOption);
+    if (sort === 'priority') {
+      const priorityOrder = { High: 1, Medium: 2, Low: 3 };
+      tasks.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+    } else if (sort === 'dueDate') {
+      tasks.sort((a, b) => {
+        if (!a.dueDate) return 1;
+        if (!b.dueDate) return -1;
+        return new Date(a.dueDate) - new Date(b.dueDate);
+      });
+    } else if (sort === 'oldest') {
+      tasks.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    } else {
+      tasks.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    }
+
     res.json(tasks);
   } catch (error) {
     res.status(500).json({ message: error.message });
