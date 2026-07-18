@@ -5,6 +5,7 @@ import { FaCheck, FaUndo, FaEdit, FaTrash, FaSpinner } from 'react-icons/fa';
 const TaskCard = ({ task, onEdit }) => {
   const { toggleWithToast, deleteTask } = useTasks();
   const [toggling, setToggling] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const isOverdue = task.dueDate && new Date(task.dueDate) < new Date() && !task.completed;
 
@@ -12,6 +13,12 @@ const TaskCard = ({ task, onEdit }) => {
     setToggling(true);
     await toggleWithToast(task._id, task);
     setToggling(false);
+  };
+
+  const handleDelete = async () => {
+    setDeleting(true);
+    await deleteTask(task._id);
+    setDeleting(false);
   };
 
   return (
@@ -35,7 +42,9 @@ const TaskCard = ({ task, onEdit }) => {
           {toggling ? <FaSpinner className="fa-spin" /> : (task.completed ? <FaUndo /> : <FaCheck />)}
         </button>
         <button className="btn-icon edit" onClick={() => onEdit(task)} title="Edit"><FaEdit /></button>
-        <button className="btn-icon delete" onClick={() => deleteTask(task._id)} title="Delete"><FaTrash /></button>
+        <button className="btn-icon delete" onClick={handleDelete} disabled={deleting} title="Delete">
+          {deleting ? <FaSpinner className="fa-spin" /> : <FaTrash />}
+        </button>
       </div>
     </div>
   );

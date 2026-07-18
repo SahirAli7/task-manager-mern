@@ -4,12 +4,13 @@ import StatsCards from '../components/StatsCards';
 import FilterBar from '../components/FilterBar';
 import TaskCard from '../components/TaskCard';
 import TaskModal from '../components/TaskModal';
-import { FaPlus, FaTrash, FaClipboardList } from 'react-icons/fa';
+import { FaPlus, FaTrash, FaClipboardList, FaSpinner } from 'react-icons/fa';
 
 const Dashboard = () => {
   const { tasks, fetchTasks, fetchStats, deleteCompleted } = useTasks();
   const [showModal, setShowModal] = useState(false);
   const [editTask, setEditTask] = useState(null);
+  const [clearing, setClearing] = useState(false);
 
   useEffect(() => {
     fetchTasks();
@@ -33,8 +34,8 @@ const Dashboard = () => {
       <div className="dashboard-header">
         <h4>Tasks</h4>
         <div className="header-actions d-flex gap-2">
-          <button className="btn-action danger-outline" onClick={deleteCompleted}>
-            <FaTrash /> Clear Completed
+          <button className="btn-action danger-outline" onClick={async () => { setClearing(true); await deleteCompleted(); setClearing(false); }} disabled={clearing}>
+            {clearing ? <FaSpinner className="fa-spin" /> : <FaTrash />} Clear Completed
           </button>
           <button className="btn-action primary" onClick={openAdd}>
             <FaPlus /> Add Task
