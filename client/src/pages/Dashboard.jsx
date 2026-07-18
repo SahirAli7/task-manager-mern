@@ -4,7 +4,7 @@ import StatsCards from '../components/StatsCards';
 import FilterBar from '../components/FilterBar';
 import TaskCard from '../components/TaskCard';
 import TaskModal from '../components/TaskModal';
-import { FaPlus, FaTrash } from 'react-icons/fa';
+import { FaPlus, FaTrash, FaClipboardList } from 'react-icons/fa';
 
 const Dashboard = () => {
   const { tasks, fetchTasks, fetchStats, deleteCompleted } = useTasks();
@@ -27,17 +27,17 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="container py-4">
+    <div className="dashboard-container">
       <StatsCards />
 
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h4 className="mb-0">Tasks</h4>
-        <div className="d-flex gap-2">
-          <button className="btn btn-outline-danger btn-sm" onClick={deleteCompleted}>
-            <FaTrash className="me-1" />Clear Completed
+      <div className="dashboard-header">
+        <h4>Tasks</h4>
+        <div className="header-actions d-flex gap-2">
+          <button className="btn-action danger-outline" onClick={deleteCompleted}>
+            <FaTrash /> Clear Completed
           </button>
-          <button className="btn btn-primary btn-sm" onClick={openAdd}>
-            <FaPlus className="me-1" />Add Task
+          <button className="btn-action primary" onClick={openAdd}>
+            <FaPlus /> Add Task
           </button>
         </div>
       </div>
@@ -45,9 +45,10 @@ const Dashboard = () => {
       <FilterBar />
 
       {tasks.length === 0 ? (
-        <div className="text-center text-muted py-5">
-          <p className="fs-5">No tasks found</p>
-          <button className="btn btn-primary" onClick={openAdd}>Create your first task</button>
+        <div className="empty-state">
+          <div className="empty-icon"><FaClipboardList /></div>
+          <p>No tasks found</p>
+          <button className="btn-action primary" onClick={openAdd}>Create your first task</button>
         </div>
       ) : (
         tasks.map((task) => <TaskCard key={task._id} task={task} onEdit={openEdit} />)

@@ -1,25 +1,23 @@
 import { useTasks } from '../context/TaskContext';
+import { FaTasks, FaCheckCircle, FaHourglassHalf, FaExclamationTriangle } from 'react-icons/fa';
 
 const cards = [
-  { label: 'Total Tasks', key: 'total', color: 'primary' },
-  { label: 'Completed', key: 'completed', color: 'success' },
-  { label: 'Pending', key: 'pending', color: 'warning' },
-  { label: 'Overdue', key: 'overdue', color: 'danger' },
+  { label: 'Total Tasks', key: 'total', icon: <FaTasks />, color: '#6c5ce7' },
+  { label: 'Completed', key: 'completed', icon: <FaCheckCircle />, color: '#00d68f' },
+  { label: 'Pending', key: 'pending', icon: <FaHourglassHalf />, color: '#ffaa00' },
+  { label: 'Overdue', key: 'overdue', icon: <FaExclamationTriangle />, color: '#ff4757' },
 ];
 
 const StatsCards = () => {
   const { stats } = useTasks();
 
   return (
-    <div className="row g-3 mb-4">
+    <div className="stats-grid">
       {cards.map((c) => (
-        <div className="col-6 col-md-3" key={c.key}>
-          <div className={`card text-bg-${c.color} text-center`}>
-            <div className="card-body">
-              <h5 className="card-title display-6">{stats[c.key]}</h5>
-              <p className="card-text">{c.label}</p>
-            </div>
-          </div>
+        <div className="stat-card" key={c.key}>
+          <div className="stat-icon" style={{ color: c.color }}>{c.icon}</div>
+          <div className="stat-number">{stats[c.key]}</div>
+          <div className="stat-label">{c.label}</div>
         </div>
       ))}
     </div>

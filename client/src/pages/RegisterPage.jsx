@@ -24,33 +24,32 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
-      <div className="card shadow" style={{ width: '100%', maxWidth: 400 }}>
-        <div className="card-body p-4">
-          <h3 className="text-center mb-4">Sign Up</h3>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label className="form-label">Name</label>
-              <input className="form-control" value={form.name} required
-                onChange={(e) => setForm({ ...form, name: e.target.value })} />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Email</label>
-              <input type="email" className="form-control" value={form.email} required
-                onChange={(e) => setForm({ ...form, email: e.target.value })} />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Password</label>
-              <input type="password" className="form-control" value={form.password} required minLength={6}
-                onChange={(e) => setForm({ ...form, password: e.target.value })} />
-              <small className="text-muted">Min 6 characters</small>
-            </div>
-            <button type="submit" className="btn btn-success w-100">Sign Up</button>
-          </form>
-          <p className="text-center mt-3 mb-0">
-            Already have an account? <Link to="/login">Sign In</Link>
-          </p>
-        </div>
+    <div className="auth-page">
+      <div className="auth-card">
+        <h3>Create Account</h3>
+        <p className="auth-subtitle">Start organizing your tasks today</p>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Name</label>
+            <input value={form.name} required placeholder="Your full name"
+              onChange={(e) => setForm({ ...form, name: e.target.value })} />
+          </div>
+          <div className="form-group">
+            <label>Email</label>
+            <input type="email" value={form.email} required placeholder="you@example.com"
+              onChange={(e) => setForm({ ...form, email: e.target.value })} />
+          </div>
+          <div className="form-group">
+            <label>Password</label>
+            <input type="password" value={form.password} required minLength={6}
+              placeholder="Min 6 characters"
+              onChange={(e) => setForm({ ...form, password: e.target.value })} />
+          </div>
+          <button type="submit" className="btn-submit success">Sign Up</button>
+        </form>
+        <p className="auth-footer">
+          Already have an account? <Link to="/login">Sign In</Link>
+        </p>
       </div>
     </div>
   );

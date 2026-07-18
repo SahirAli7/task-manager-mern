@@ -21,27 +21,26 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
-      <div className="card shadow" style={{ width: '100%', maxWidth: 400 }}>
-        <div className="card-body p-4">
-          <h3 className="text-center mb-4">Sign In</h3>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label className="form-label">Email</label>
-              <input type="email" className="form-control" value={email} required
-                onChange={(e) => setEmail(e.target.value)} />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Password</label>
-              <input type="password" className="form-control" value={password} required
-                onChange={(e) => setPassword(e.target.value)} />
-            </div>
-            <button type="submit" className="btn btn-primary w-100">Sign In</button>
-          </form>
-          <p className="text-center mt-3 mb-0">
-            Don't have an account? <Link to="/register">Sign Up</Link>
-          </p>
-        </div>
+    <div className="auth-page">
+      <div className="auth-card">
+        <h3>Welcome Back</h3>
+        <p className="auth-subtitle">Sign in to manage your tasks</p>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Email</label>
+            <input type="email" value={email} required placeholder="you@example.com"
+              onChange={(e) => setEmail(e.target.value)} />
+          </div>
+          <div className="form-group">
+            <label>Password</label>
+            <input type="password" value={password} required placeholder="Enter your password"
+              onChange={(e) => setPassword(e.target.value)} />
+          </div>
+          <button type="submit" className="btn-submit">Sign In</button>
+        </form>
+        <p className="auth-footer">
+          Don't have an account? <Link to="/register">Sign Up</Link>
+        </p>
       </div>
     </div>
   );
