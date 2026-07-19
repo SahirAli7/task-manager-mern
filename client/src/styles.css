@@ -548,19 +548,10 @@ body {
 
 /* Responsive */
 @media (max-width: 480px) {
-  .dashboard-container {
-    padding: 16px 12px;
-  }
-
   .dashboard-header {
     flex-direction: column;
     gap: 10px;
     align-items: stretch;
-  }
-
-  .header-actions {
-    display: flex;
-    gap: 8px;
   }
 
   .header-actions .btn-action {
@@ -571,16 +562,12 @@ body {
   .task-card {
     flex-direction: column;
     align-items: stretch;
-    gap: 10px;
+    gap: 8px;
   }
 
   .task-card .task-actions {
     margin-left: 0;
     justify-content: flex-end;
-  }
-
-  .auth-card {
-    padding: 24px 20px;
   }
 
   .row-fields {
