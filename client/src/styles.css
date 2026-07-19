@@ -515,7 +515,12 @@ body {
   cursor: pointer;
 }
 
-.btn-cancel:hover {
+.btn-cancel:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-cancel:hover:not(:disabled) {
   color: #fff;
   border-color: #666;
 }

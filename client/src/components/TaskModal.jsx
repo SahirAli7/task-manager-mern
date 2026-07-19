@@ -77,7 +77,7 @@ const TaskModal = ({ show, onClose, editTask }) => {
             </div>
           </div>
           <div className="modal-foot">
-            <button type="button" className="btn-cancel" onClick={onClose}>Cancel</button>
+            <button type="button" className="btn-cancel" onClick={onClose} disabled={loading}>Cancel</button>
             <button type="submit" className="btn-submit" disabled={loading} style={{ width: 'auto', padding: '9px 24px' }}>
               {loading ? 'Saving...' : (editTask ? 'Update' : 'Create')}
             </button>
