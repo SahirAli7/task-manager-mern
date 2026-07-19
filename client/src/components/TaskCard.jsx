@@ -4,21 +4,20 @@ import { FaCheck, FaUndo, FaEdit, FaTrash, FaSpinner } from 'react-icons/fa';
 
 const TaskCard = ({ task, onEdit }) => {
   const { toggleWithToast, deleteTask } = useTasks();
-  const [toggling, setToggling] = useState(false);
-  const [deleting, setDeleting] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const isOverdue = task.dueDate && new Date(task.dueDate) < new Date() && !task.completed;
 
   const handleToggle = async () => {
-    setToggling(true);
+    setLoading(true);
     await toggleWithToast(task._id, task);
-    setToggling(false);
+    setLoading(false);
   };
 
   const handleDelete = async () => {
-    setDeleting(true);
+    setLoading(true);
     await deleteTask(task._id);
-    setDeleting(false);
+    setLoading(false);
   };
 
   return (
@@ -38,12 +37,12 @@ const TaskCard = ({ task, onEdit }) => {
         </div>
       </div>
       <div className="task-actions">
-        <button className="btn-icon complete" onClick={handleToggle} disabled={toggling} title={task.completed ? 'Undo' : 'Complete'}>
-          {toggling ? <FaSpinner className="fa-spin" /> : (task.completed ? <FaUndo /> : <FaCheck />)}
+        <button className="btn-icon complete" onClick={handleToggle} disabled={loading} title={task.completed ? 'Undo' : 'Complete'}>
+          {loading ? <FaSpinner className="fa-spin" /> : (task.completed ? <FaUndo /> : <FaCheck />)}
         </button>
-        <button className="btn-icon edit" onClick={() => onEdit(task)} title="Edit"><FaEdit /></button>
-        <button className="btn-icon delete" onClick={handleDelete} disabled={deleting} title="Delete">
-          {deleting ? <FaSpinner className="fa-spin" /> : <FaTrash />}
+        <button className="btn-icon edit" onClick={() => onEdit(task)} disabled={loading} title="Edit"><FaEdit /></button>
+        <button className="btn-icon delete" onClick={handleDelete} disabled={loading} title="Delete">
+          {loading ? <FaSpinner className="fa-spin" /> : <FaTrash />}
         </button>
       </div>
     </div>
